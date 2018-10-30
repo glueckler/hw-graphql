@@ -1,6 +1,6 @@
 // all knowledge for graphql to know our database
 const graphql = require('graphql')
-const _ = require('lodash')
+const axios = require('axios')
 
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql
 
@@ -26,12 +26,10 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: { id: { type: GraphQLString } },
       resolve(parentValue, args) {
-        // hardcode users for now
-        const users = [
-          { id: '23', firstName: 'Dean' },
-          { id: '22', firstName: 'Joel' },
-        ]
-        return _.find(users, { id: args.id })
+        // you can return a Promise to gql, but make sure to just return the "data"
+        return axios
+          .get(`http://localhost:3000/users/${args.id}`)
+          .then(resp => resp.data)
       },
     },
   },
