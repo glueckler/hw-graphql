@@ -4,6 +4,16 @@ const axios = require('axios')
 
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql
 
+// remember that order of declaration is important
+const CompanyType = new GraphQLObjectType({
+  name: 'Company',
+  fields: {
+    id: { type: GraphQLString },
+    name: { type: GraphQLString },
+    description: { type: GraphQLString },
+  },
+})
+
 const UserType = new GraphQLObjectType({
   // name: also a string that defines the type we're describing
   // capitalized by convention
@@ -13,6 +23,15 @@ const UserType = new GraphQLObjectType({
     id: { type: GraphQLString },
     firstName: { type: GraphQLString },
     age: { type: GraphQLInt },
+    company: {
+      type: CompanyType,
+      // company will resolve to companyId in our example
+      resolve(parentValue, args) {
+        return axios
+          .get(`http://localhost:3000/companies/${parentValue.companyId}`)
+          .then(res => res.data)
+      },
+    },
   },
 })
 
