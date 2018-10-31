@@ -12,3 +12,20 @@ add support for this query (starting with a company id root query)
   }
 }
 ```
+
+## 07
+
+add get user list from a single company id (one to many)
+
+```
+{
+  user (id: "23") {
+		company {
+      id,
+      users {
+        firstName
+      }
+    }
+  }
+}
+```

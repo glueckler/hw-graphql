@@ -2,16 +2,31 @@
 const graphql = require('graphql')
 const axios = require('axios')
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLSchema,
+  GraphQLList,
+} = graphql
 
 // remember that order of declaration is important
 const CompanyType = new GraphQLObjectType({
   name: 'Company',
-  fields: {
+  // use arrow function to prevent circular reference to "UserType"
+  fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-  },
+    users: {
+      type: new GraphQLList(UserType),
+      resolve(parentValue, args) {
+        return axios
+          .get(`http://localhost:3000/companies/${parentValue.id}/users`)
+          .then(r => r.data)
+      },
+    },
+  }),
 })
 
 const UserType = new GraphQLObjectType({
@@ -19,7 +34,7 @@ const UserType = new GraphQLObjectType({
   // capitalized by convention
   name: 'User',
   // fields: tells gql about the properties of the type
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     firstName: { type: GraphQLString },
     age: { type: GraphQLInt },
@@ -32,7 +47,7 @@ const UserType = new GraphQLObjectType({
           .then(res => res.data)
       },
     },
-  },
+  }),
 })
 
 // a root query tells graphql specifically where to begin it's query
