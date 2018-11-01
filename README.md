@@ -44,3 +44,13 @@ mutation {
 }
 ```
 
+## deleteUser mutation
+
+```
+mutation {
+  deleteUser(id: "23") {
+		id
+  }
+}
+```
+
