@@ -54,3 +54,14 @@ mutation {
 }
 ```
 
+## editUser mutation
+
+```
+mutation {
+  editUser(id: "40", firstName: "berry") {
+		id
+    firstName
+  }
+}
+```
+
