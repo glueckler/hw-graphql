@@ -8,6 +8,7 @@ const {
   GraphQLInt,
   GraphQLSchema,
   GraphQLList,
+  GraphQLNonNull,
 } = graphql
 
 // remember that order of declaration is important
@@ -78,6 +79,30 @@ const RootQuery = new GraphQLObjectType({
   },
 })
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addUser: {
+      // type of data we will eventually return from resolve()
+      // may not always be the same as type we're adding
+      // although it usually is..
+      type: UserType,
+      // data we pass into the resolve()
+      args: {
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: GraphQLNonNull(GraphQLInt) },
+        companyId: { type: GraphQLString },
+      },
+      resolve(parentValue, { firstName, age }) {
+        return axios
+          .post(`http://localhost:3000/users`, { firstName, age })
+          .then(r => r.data)
+      },
+    },
+  },
+})
+
 module.exports = new GraphQLSchema({
+  mutation,
   query: RootQuery,
 })

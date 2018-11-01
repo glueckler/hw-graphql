@@ -29,3 +29,18 @@ add get user list from a single company id (one to many)
   }
 }
 ```
+
+## 07
+
+addUser mutation 
+
+```
+mutation {
+  addUser(firstName: "Sandy", age: 99) {
+    id
+    firstName
+    age
+  }
+}
+```
+
