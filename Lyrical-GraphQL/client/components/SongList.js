@@ -19,15 +19,17 @@ class SongList extends PureComponent {
 
     return this.props.data.songs.map(song => (
       <li key={song.id}>
-        <i
-          className="material-icons"
-          onClick={() => {
-            this.handleDelete(song.id);
-          }}
-        >
+        <Link to={`songs/${song.id}`}>
+          <i
+            className="material-icons"
+            onClick={() => {
+              this.handleDelete(song.id);
+            }}
+          >
           delete
-        </i>
-        <span>{song.title}</span>
+          </i>
+          <span>{song.title}</span>
+        </Link>
       </li>
     ));
   }

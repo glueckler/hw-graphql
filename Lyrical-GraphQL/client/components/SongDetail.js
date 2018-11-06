@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
 import { fetchSongById } from '../queries';
 
 class SongDetail extends PureComponent {
@@ -9,6 +10,7 @@ class SongDetail extends PureComponent {
 
     return (
       <div>
+        <Link to="/">Home</Link>
         <h3>{song.title}</h3>
       </div>
     );
