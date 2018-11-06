@@ -13,7 +13,12 @@ import SongDetail from './components/SongDetail';
 
 // empty config object.. apollo makes assumptions that work for now
 // like /graphql route for requests
-const client = new ApolloClient({});
+const client = new ApolloClient({
+  // identifying each graphql object allows apollo to update react when a specific record is updated
+  // apollo makes no assumption about how to keep track of records therefor we tell it to use id
+  // make sure you request the right data back from the mutation (if title is necessary it must be requested)
+  dataIdFromObject: o => o.id,
+});
 
 const Root = () => (
   <ApolloProvider client={client}>

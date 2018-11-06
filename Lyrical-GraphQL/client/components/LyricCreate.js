@@ -18,8 +18,9 @@ class LyricCreate extends PureComponent {
   }
 
   handleSubmit() {
-    const { id } = this.props;
-    this.props.mutate({ variables: { songId: id, content: this.state.value } });
+    const { songId } = this.props;
+    this.props.mutate({ variables: { songId, content: this.state.value } });
+    this.setState({ value: '' });
   }
 
   render() {
@@ -36,8 +37,11 @@ const mutation = gql`
   mutation AddLyric($content: String, $songId: ID) {
     addLyricToSong(content: $content, songId: $songId) {
       id
+      title
       lyrics {
+        id
         content
+        likes
       }
     }
   }

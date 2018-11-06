@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { fetchSongById } from '../queries';
 
 import LyricCreate from './LyricCreate';
+import LyricList from './LyricList';
 
 class SongDetail extends PureComponent {
   render() {
@@ -14,7 +15,8 @@ class SongDetail extends PureComponent {
       <div>
         <Link to="/">Home</Link>
         <h3>{song.title}</h3>
-        <LyricCreate id={this.props.params.id} />
+        <LyricList lyrics={song.lyrics} />
+        <LyricCreate songId={this.props.params.id} />
       </div>
     );
   }

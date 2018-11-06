@@ -23,6 +23,7 @@ export const fetchSongById = gql`
       id
       title
       lyrics {
+        id
         likes
         content
       }
