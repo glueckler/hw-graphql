@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { hashHistory } from 'react-router';
 
 class SongCreate extends PureComponent {
   constructor(props) {
@@ -17,9 +18,11 @@ class SongCreate extends PureComponent {
 
     this.props.mutate({
       variables: {
-        title: this.state.title
-      }
-    })
+        title: this.state.title,
+      },
+    }).then(() => {
+      hashHistory.push('/');
+    });
   }
 
   render() {
