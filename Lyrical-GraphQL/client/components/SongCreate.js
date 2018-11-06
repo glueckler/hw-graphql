@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { hashHistory } from 'react-router';
+import { fetchSongs as query } from '../queries';
 
 class SongCreate extends PureComponent {
   constructor(props) {
@@ -20,6 +21,7 @@ class SongCreate extends PureComponent {
       variables: {
         title: this.state.title,
       },
+      refetchQueries: [{ query }],
     }).then(() => {
       hashHistory.push('/');
     });
