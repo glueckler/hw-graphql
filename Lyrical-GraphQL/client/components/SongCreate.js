@@ -21,6 +21,7 @@ class SongCreate extends PureComponent {
       variables: {
         title: this.state.title,
       },
+      // this is going to refetch queries not associated with this component
       refetchQueries: [{ query }],
     }).then(() => {
       hashHistory.push('/');

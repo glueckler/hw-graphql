@@ -8,3 +8,11 @@ export const fetchSongs = gql`
     }
   }
 `;
+
+export const deleteSong = gql`
+  mutation DeleteSong($id: ID) {
+    deleteSong(id: $id) {
+      id
+    }
+  }
+`
