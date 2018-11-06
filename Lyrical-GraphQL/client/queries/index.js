@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export const fetchSongs = gql`
   {
     songs {
-      id 
+      id
       title
     }
   }
@@ -15,4 +15,17 @@ export const deleteSong = gql`
       id
     }
   }
-`
+`;
+
+export const fetchSongById = gql`
+  query FindSong($id: ID!) {
+    song(id: $id) {
+      id
+      title
+      lyrics {
+        likes
+        content
+      }
+    }
+  }
+`;
