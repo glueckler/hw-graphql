@@ -8,6 +8,7 @@ class SongList extends PureComponent {
     this.props.mutate({ variables: { id } })
       .then(() => {
         // this is a great way to refetch data associated with this component
+        // reminder this does submit another request, which may be avoided using dataIdFromObject
         this.props.data.refetch();
       });
   }
