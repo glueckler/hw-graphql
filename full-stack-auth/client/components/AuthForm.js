@@ -33,8 +33,10 @@ export default class AuthForm extends PureComponent {
   }
 
   render() {
+    const { errors } = this.props
     return (
       <form onSubmit={this.handleSubmit}>
+        {errors}
         <input
           placeholder="email"
           value={this.state.username}
