@@ -1,33 +1,34 @@
 import React, { PureComponent } from 'react'
-import AuthForm from './AuthForm'
 import { graphql } from 'react-apollo'
-import LoginMutation from '../mutations/Login'
-import CurrentUser from '../queries/CurrentUser'
+import AuthForm from './AuthForm'
 
-export default graphql(LoginMutation)(
-  class LoginForm extends PureComponent {
+import SignupMutation from '../mutations/Signup'
+import CurrentUserQuery from '../queries/CurrentUser'
+
+export default graphql(SignupMutation)(
+  class SignupForm extends PureComponent {
     constructor(props) {
       super(props)
-
+    
       this.state = {
-        formErrors: null,
+         errors: null,
       }
     }
 
-    handleSubmit({ username: e, password: p }) {
+    handleSignup({ username: e, password: p }) {
       this.props
         .mutate({
           variables: {
             e,
             p,
           },
-          refetchQueries: [{ query: CurrentUser }],
+          refetchQueries: [{ query: CurrentUserQuery }]
         })
         .then(() => {})
         .catch(({ graphQLErrors: gqlErrs }) => {
           if (!gqlErrs) return
           this.setState({
-            formErrors: (
+            errors: (
               <ul>
                 {gqlErrs.map(e => (
                   <li key={e.message}>{e.message}</li>
@@ -37,13 +38,12 @@ export default graphql(LoginMutation)(
           })
         })
     }
+
     render() {
       return (
         <div>
-          <AuthForm
-            onSubmit={this.handleSubmit.bind(this)}
-            errors={this.state.formErrors}
-          />
+          <h3>Sign Up</h3>
+          <AuthForm onSubmit={this.handleSignup.bind(this)} errors={this.state.errors} />
         </div>
       )
     }
